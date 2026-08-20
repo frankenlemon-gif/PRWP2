@@ -159,7 +159,7 @@
 
 		<activity android:name=".HardwareSettingsActivity"
             android:exported="false"
-			android:label="HardwareSettings"
+			android:label="SecuritySettings"
 			android:screenOrientation="portrait"
 			android:enabled="true"
 			android:launchMode="singleInstance"
