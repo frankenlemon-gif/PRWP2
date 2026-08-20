@@ -14,9 +14,9 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
       super.onPasswordFailed(context, intent, user);
 
 	  //test
-	  UserManager um = (UserManager) context.getSystemService(Context.USER_SERVICE);   	
+	  UserManager um0 = (UserManager) context.getSystemService(Context.USER_SERVICE);   	
 	  KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);    
-	  if (!um.isUserUnlocked(android.os.Process.myUserHandle()) || km.isKeyguardLocked()) {wipe.wipe(context);}
+	  if (!um0.isUserUnlocked(android.os.Process.myUserHandle()) || km.isKeyguardLocked()) {wipe.wipe(context);}
 	  //test
 	
 	  if (!android.os.Process.myUserHandle().equals(user)) return;
