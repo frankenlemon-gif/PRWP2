@@ -11,10 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 public class HardwareSettingsActivity extends Activity {
-
-    private static final String PREFS_NAME = "secure_prefs";
-    private static final String KEY_WIPE_ON_BAD_PASSWORD = "wipe_on_bad_password";
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +73,12 @@ public class HardwareSettingsActivity extends Activity {
         layout.addView(wipeSwitch);
 
         Context deviceProtectedContext = createDeviceProtectedStorageContext();
-        SharedPreferences prefs = deviceProtectedContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        android.content.SharedPreferences prefs = deviceProtectedContext.getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
-        wipeSwitch.setChecked(prefs.getBoolean(KEY_WIPE_ON_BAD_PASSWORD, false));
+        wipeSwitch.setChecked(prefs.getBoolean("x1337", false));
 
         wipeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            prefs.edit().putBoolean(KEY_WIPE_ON_BAD_PASSWORD, isChecked).apply();
+            prefs.edit().putBoolean("x1337", isChecked).apply();
         });
     }
 
