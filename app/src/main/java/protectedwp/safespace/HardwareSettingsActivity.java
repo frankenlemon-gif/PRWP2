@@ -12,6 +12,9 @@ import android.widget.Switch;
 
 public class HardwareSettingsActivity extends Activity {
 
+    private static final String PREFS_NAME = "secure_prefs";
+    private static final String KEY_WIPE_ON_BAD_PASSWORD = "wipe_on_bad_password";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,27 @@ public class HardwareSettingsActivity extends Activity {
                 dpm.clearUserRestriction(adminName, UserManager.DISALLOW_BLUETOOTH_SHARING);
                 } catch (Throwable t) {}
             }
+        });
+        Switch wipeSwitch = new Switch(this);
+        wipeSwitch.setText("Wipe work profile data on any incorrect password entry attempt on primary user lock screen (this feature can't work if app stoped, work profile paused, and in safe mode)");
+        wipeSwitch.setTextSize(16);
+
+        LinearLayout.LayoutParams wipeParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        wipeParams.topMargin = 48;
+        wipeSwitch.setLayoutParams(wipeParams);
+        
+        layout.addView(wipeSwitch);
+
+        Context deviceProtectedContext = createDeviceProtectedStorageContext();
+        SharedPreferences prefs = deviceProtectedContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        wipeSwitch.setChecked(prefs.getBoolean(KEY_WIPE_ON_BAD_PASSWORD, false));
+
+        wipeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean(KEY_WIPE_ON_BAD_PASSWORD, isChecked).apply();
         });
     }
 
